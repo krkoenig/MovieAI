@@ -10,9 +10,21 @@ Created on Mon Feb 16 14:49:27 2015
 #for a in test['movies']:
 #    print(a['title'])
     
-l = readCSV('example.csv')
-print(l)
-print('\n')
+from time import sleep     
+    
+open('movies.txt', 'w').close()
+
+l = readCSV('Movies.2010.2014.csv')
 for row in l:
-    test = queryMovies(row,1)
-    print(test['movies'][0]['synopsis'] + '\n')
+    sleep(0.25)
+    print(row[0] + '\n')
+    test = queryMovies(row[0])
+    if len(test['movies']) > 0:
+        test = test['movies'][0]
+        writeJSON(test,'movies.txt')
+        print(test['id'] + '\n')
+    
+l = readJSON('movies.txt')
+for r in l:
+    print(r['title'])
+    print ('\n')
