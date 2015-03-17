@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Feb 16 14:49:27 2015
-
-@author: Kyle
+@author: Kyle, Buddy, Igii
 """
 
 #test = queryMovies('a',2)
@@ -28,3 +26,23 @@ l = readJSON('movies.txt')
 for r in l:
     print(r['title'])
     print ('\n')
+    
+    
+    
+#####################################
+# how to load features, and ratings #
+#####################################
+    
+import pickle
+import numpy as np
+
+
+a = open('criticratings.p', 'rb')
+b = open('audienceratings.p', 'rb')
+c = open('features.npy', 'rb')
+criticratings = pickle.load(a)
+audienceratings = pickle.load(b)
+features = np.load(c)
+a.close()
+b.close()
+c.close()
