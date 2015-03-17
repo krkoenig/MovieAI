@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Feb 16 13:16:48 2015
-
-@author: Kyle
+@author: Kyle, Buddy, Igii
 """
 
 # Grabs the data from Rottoen Tomato's API and returns a JSON object which
@@ -19,7 +17,7 @@ apikey = 'wgm7hdwatf4x5r6fhyxcbzh3'
 def queryMovies(q):
     # Convert p to URL usable string
     q = par.quote(q)
-    raw_data = req.urlopen('http://api.rottentomatoes.com/api/public/v1.0/movies.json?apikey='+apikey+'&q='+q+'&page_limit=1')
+    raw_data = req.urlopen('http://api.rottentomatoes.com/api/public/v1.0/movies.json?apikey='+apikey+'&q='+q+'&page_limit=10')
     json_data = json.loads(raw_data.read().decode())
     return json_data
     
@@ -49,6 +47,13 @@ def reviewMovie(p):
     json_data = json.loads(raw_data.read().decode())
     return json_data 
 
+# p is the movie id (integer)
+# return a json object containing a more detailed description of the movie
+def detailedMovie(p):
+    raw_data = req.urlopen('http://api.rottentomatoes.com/api/public/v1.0/movies/'+str(p)+'.json?apikey='+apikey)
+    json_data = json.loads(raw_data.read().decode())
+    return json_data
+    
 # filename is the name of the file (string)
 # data is the JSON data to be written (string)
 def writeJSON(data,filename):
@@ -57,7 +62,6 @@ def writeJSON(data,filename):
     outfile.write('\n')
     outfile.close()
         
-# 
 def readJSON(filename):
     infile = open(filename, 'r')
     json_data = []
