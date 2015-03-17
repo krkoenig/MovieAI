@@ -33,27 +33,6 @@ def openingMovies():
     json_data = json.loads(raw_data.read().decode())
     return json_data
     
-# p is the movie id (integer) 
-# return a json object containing the cast of the requested movie   
-def castMovie(p):
-    raw_data = req.urlopen('http://api.rottentomatoes.com/api/public/v1.0/movies/'+str(p)+'/cast.json?apikey='+apikey+'&page_limit=50')
-    json_data = json.loads(raw_data.read().decode())
-    return json_data
-
-# p is the movie id (integer)
-# return a json object containing the reviews of the requested movie
-def reviewMovie(p):
-    raw_data = req.urlopen('http://api.rottentomatoes.com/api/public/v1.0/movies/'+str(p)+'/reviews.json?apikey='+apikey+'&page_limit=50')
-    json_data = json.loads(raw_data.read().decode())
-    return json_data 
-
-# p is the movie id (integer)
-# return a json object containing a more detailed description of the movie
-def detailedMovie(p):
-    raw_data = req.urlopen('http://api.rottentomatoes.com/api/public/v1.0/movies/'+str(p)+'.json?apikey='+apikey)
-    json_data = json.loads(raw_data.read().decode())
-    return json_data
-    
 # filename is the name of the file (string)
 # data is the JSON data to be written (string)
 def writeJSON(data,filename):
@@ -82,3 +61,19 @@ def readCSV(filename):
             l.append(row)
         csvfile.close()
     return l;
+    
+from time import sleep
+
+# Puts 2010 to 2014 movies into movies.txt
+def get2010to2014Movies():   
+    open('movies.txt', 'w').close()
+    
+    l = readCSV('Movies.2010.2014.csv')
+    for row in l:
+        sleep(0.25)
+        print(row[0] + '\n')
+        test = queryMovies(row[0])
+        if len(test['movies']) > 0:
+            test = test['movies'][0]
+            writeJSON(test,'movies.txt')
+            print(test['id'] + '\n')
