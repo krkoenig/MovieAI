@@ -7,6 +7,7 @@ import numpy as np
 import pickle
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn import preprocessing
+from RottenTomatoesData import readJSON
 
 
 # separate out a particular feature
